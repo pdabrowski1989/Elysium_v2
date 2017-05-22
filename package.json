@@ -1,0 +1,26 @@
+{
+  "name": "elysiumv2",
+  "version": "1.0.0",
+  "description": "RPG HTML5 GAME",
+  "main": "index.js",
+  "scripts": {
+    "test": "",
+    "start": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pdabrowski1989/Elysium_v2.git"
+  },
+  "author": "Pawel Dabrowski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pdabrowski1989/Elysium_v2/issues"
+  },
+  "homepage": "https://github.com/pdabrowski1989/Elysium_v2#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.1",
+    "webpack": "^2.5.1"
+  }
+}
