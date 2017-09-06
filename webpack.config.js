@@ -1,23 +1,63 @@
-var path = require('path');
+const path = require('path');
+const webpack = require('webpack');
+
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: './app/engine/index.js',
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+    entry: {
+        app: './app/app.module.js',
+        vendor: './node_modules/three/build/three.module.js'
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['env']
-                    }
-                }
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
             }
         ]
-    }
+    },
+    resolve: {
+        extensions: [".tsx", ".ts", ".js"]
+    },
+    output: {
+        filename: './dist/[name].js',
+        path: path.join(__dirname)
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin(
+            {
+                warning: false,
+                mangle: true,
+                comments: false
+            }
+        ),
+        new BrowserSyncPlugin({
+            host: 'localhost',
+            port: 3000,
+            server: {
+                baseDir: './dist'
+            }
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: {
+                    glob: './**/*.html',
+                    dot: true
+                },
+                to: './dist',
+                ignore: [
+                    {
+                        dots: true,
+                        glob: 'node_modules/**/*'
+                    },
+                    {
+                        dots: true,
+                        glob: 'dist/**/*'
+                    }
+                ]
+            }
+        ])
+    ]
 };
